@@ -10,11 +10,7 @@ const lengthEl = document.getElementById("length-conversion-txt");
 const volumeEl = document.getElementById("volume-conversion-txt");
 const massEl = document.getElementById("mass-conversion-txt");
 
-console.log(btnEl, inputEl);
-
-btnEl.addEventListener("click", (event) => {
-  // console.log(event.target)
-  // console.log(inputEl.value);
+function render() {
   const inputVal = Number(inputEl.value);
 
   const metersToFeet = inputVal * 3.281;
@@ -30,5 +26,22 @@ btnEl.addEventListener("click", (event) => {
   const kilogramToPounds = inputVal * 2.204;
   const poundsToKilogram = inputVal / 2.204;
   const massText = `${inputVal} kilos = ${kilogramToPounds.toFixed(3)} pounds | ${inputVal} pounds = ${poundsToKilogram.toFixed(3)} kilos`;
-  massEl.textContent = massText
+  massEl.textContent = massText;
+}
+
+// btnEl.addEventListener("click", (event) => {
+//   render();
+// });
+
+// event listener with 1 seconds debounce
+let timeOutId;
+inputEl.addEventListener("input", (event) => {
+  if (timeOutId) {
+    clearTimeout(timeOutId);
+  }
+  timeOutId = setTimeout(() => {
+    render();
+  }, 1000);
 });
+
+render();
